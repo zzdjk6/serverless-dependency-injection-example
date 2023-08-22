@@ -1,0 +1,29 @@
+openapi: 3.0.3
+info:
+  title: Serverless DI Example
+  version: "1.0"
+servers:
+  - url: http://localhost:3000
+paths:
+  /api/todos:
+    post:
+      summary: Create a Todo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
