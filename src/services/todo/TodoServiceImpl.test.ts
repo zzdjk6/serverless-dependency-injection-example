@@ -11,11 +11,10 @@ it("should create a new todo and put the message into queue", async () => {
   const configService = serviceContainer.cradle.configService;
   const messageQueueService = serviceContainer.cradle.messageQueueService;
   const todoService = new TodoServiceImpl({ configService, messageQueueService });
-  const content = "test content";
 
   const sendMessageSpy = jest.spyOn(messageQueueService, "sendMessage");
 
-  await todoService.createTodo(content);
+  await todoService.createTodo("test content");
 
   expect(sendMessageSpy).toHaveBeenCalledWith({
     messageQueueUrl: configService.getMessageQueueUrl(),

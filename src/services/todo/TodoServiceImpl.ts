@@ -6,11 +6,11 @@ import { ConfigService } from "../config/ConfigService";
 
 export class TodoServiceImpl implements TodoService {
   private readonly configService: ConfigService;
-  private readonly messageService: MessageQueueService;
+  private readonly messageQueueService: MessageQueueService;
 
   constructor(dependencies: Pick<ServiceContainerCradle, "configService" | "messageQueueService">) {
     this.configService = dependencies.configService;
-    this.messageService = dependencies.messageQueueService;
+    this.messageQueueService = dependencies.messageQueueService;
   }
 
   public async createTodo(content: string): Promise<string> {
@@ -18,12 +18,9 @@ export class TodoServiceImpl implements TodoService {
 
     // ...
 
-    await this.messageService.sendMessage({
+    await this.messageQueueService.sendMessage({
       messageQueueUrl: this.configService.getMessageQueueUrl(),
-      messageBody: JSON.stringify({
-        type: "TODO_CREATED",
-        id,
-      }),
+      messageBody: JSON.stringify({ type: "TODO_CREATED", id }),
     });
 
     return id;
